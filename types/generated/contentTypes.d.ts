@@ -402,12 +402,75 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
     neighborhood: Schema.Attribute.String;
     number: Schema.Attribute.String;
     phone: Schema.Attribute.String;
+    professional_data: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::professional-data.professional-data'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     state: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     zipCode: Schema.Attribute.String;
+  };
+}
+
+export interface ApiProfessionalDataProfessionalData
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'professional_datas';
+  info: {
+    displayName: 'ProfessionalData';
+    pluralName: 'professional-datas';
+    singularName: 'professional-data';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    admissionDate: Schema.Attribute.Date;
+    Cbo: Schema.Attribute.String;
+    client: Schema.Attribute.Relation<'oneToOne', 'api::client.client'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dismissalDate: Schema.Attribute.Date;
+    dismissalObservation: Schema.Attribute.Text;
+    finalHour: Schema.Attribute.Time;
+    initialHour: Schema.Attribute.Time;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::professional-data.professional-data'
+    > &
+      Schema.Attribute.Private;
+    lunchFinalHour: Schema.Attribute.Time;
+    lunchInitialHour: Schema.Attribute.DateTime;
+    natureOfThePosition: Schema.Attribute.String;
+    paymentMethod: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    sector: Schema.Attribute.String;
+    startingSalary: Schema.Attribute.Decimal;
+    typeOfTermination: Schema.Attribute.Enumeration<
+      [
+        'DEMISSAO_SEM_JUSTA_CAUSA',
+        'DEMISSAO_POR_JUSTA_CAUSA',
+        'DEMISSAO_INDIRETA',
+        'PEDIDO_DE_DEMISSAO',
+        'APOSENTADORIA',
+        'ACORDO_MUTUO',
+        'TERMINO_CONTRATO_PRAZO_DETERMINADO',
+        'MORTE_EMPREGADO',
+        'EXTINCAO_EMPRESA',
+        'CULPA_RECIPROCA',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -912,6 +975,7 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    client: Schema.Attribute.Relation<'oneToOne', 'api::client.client'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -969,6 +1033,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::client.client': ApiClientClient;
+      'api::professional-data.professional-data': ApiProfessionalDataProfessionalData;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

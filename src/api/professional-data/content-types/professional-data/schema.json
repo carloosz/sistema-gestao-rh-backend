@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "professional_datas",
+  "info": {
+    "singularName": "professional-data",
+    "pluralName": "professional-datas",
+    "displayName": "ProfessionalData"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "admissionDate": {
+      "type": "date"
+    },
+    "natureOfThePosition": {
+      "type": "string"
+    },
+    "sector": {
+      "type": "string"
+    },
+    "Cbo": {
+      "type": "string"
+    },
+    "startingSalary": {
+      "type": "decimal"
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "initialHour": {
+      "type": "time"
+    },
+    "finalHour": {
+      "type": "time"
+    },
+    "lunchInitialHour": {
+      "type": "datetime"
+    },
+    "lunchFinalHour": {
+      "type": "time"
+    },
+    "dismissalDate": {
+      "type": "date"
+    },
+    "typeOfTermination": {
+      "type": "enumeration",
+      "enum": [
+        "DEMISSAO_SEM_JUSTA_CAUSA",
+        "DEMISSAO_POR_JUSTA_CAUSA",
+        "DEMISSAO_INDIRETA",
+        "PEDIDO_DE_DEMISSAO",
+        "APOSENTADORIA",
+        "ACORDO_MUTUO",
+        "TERMINO_CONTRATO_PRAZO_DETERMINADO",
+        "MORTE_EMPREGADO",
+        "EXTINCAO_EMPRESA",
+        "CULPA_RECIPROCA"
+      ]
+    },
+    "dismissalObservation": {
+      "type": "text"
+    },
+    "client": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::client.client",
+      "inversedBy": "professional_data"
+    }
+  }
+}

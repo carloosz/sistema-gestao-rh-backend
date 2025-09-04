@@ -47,6 +47,18 @@
     },
     "number": {
       "type": "string"
+    },
+    "professional_data": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::professional-data.professional-data",
+      "mappedBy": "client"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "client"
     }
   }
 }
