@@ -419,6 +419,38 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDayOfWorkDayOfWork extends Struct.CollectionTypeSchema {
+  collectionName: 'day_of_works';
+  info: {
+    displayName: 'DayOfWork';
+    pluralName: 'day-of-works';
+    singularName: 'day-of-work';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::day-of-work.day-of-work'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    professional_datas: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::professional-data.professional-data'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProfessionalDataProfessionalData
   extends Struct.CollectionTypeSchema {
   collectionName: 'professional_datas';
@@ -437,6 +469,10 @@ export interface ApiProfessionalDataProfessionalData
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    days_of_work: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::day-of-work.day-of-work'
+    >;
     dismissalDate: Schema.Attribute.Date;
     dismissalObservation: Schema.Attribute.Text;
     finalHour: Schema.Attribute.Time;
@@ -1033,6 +1069,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::client.client': ApiClientClient;
+      'api::day-of-work.day-of-work': ApiDayOfWorkDayOfWork;
       'api::professional-data.professional-data': ApiProfessionalDataProfessionalData;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

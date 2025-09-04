@@ -67,6 +67,12 @@
       "relation": "oneToOne",
       "target": "api::client.client",
       "inversedBy": "professional_data"
+    },
+    "days_of_work": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::day-of-work.day-of-work",
+      "mappedBy": "professional_datas"
     }
   }
 }
