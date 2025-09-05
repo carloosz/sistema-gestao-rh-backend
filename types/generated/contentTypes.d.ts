@@ -484,7 +484,7 @@ export interface ApiProfessionalDataProfessionalData
     > &
       Schema.Attribute.Private;
     lunchFinalHour: Schema.Attribute.Time;
-    lunchInitialHour: Schema.Attribute.DateTime;
+    lunchInitialHour: Schema.Attribute.Time;
     natureOfThePosition: Schema.Attribute.String;
     paymentMethod: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
