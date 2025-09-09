@@ -408,6 +408,7 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
       'api::professional-data.professional-data'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    registrationNumber: Schema.Attribute.String;
     state: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
