@@ -4,6 +4,8 @@ const { ApplicationError } = utils.errors;
 import { RegisterUserDTO } from "../dto/RegisterUserDTO";
 import  RegisterUserSchema from "../validation/RegisterUserSchema";
 
+import * as yup from 'yup';
+
 function timeStringToDate(
   timeString: string, 
   baseYear: number = 2025, 
@@ -52,7 +54,7 @@ class RegisterUser {
                         dateOfBirth: new Date(data.dateOfBirth),
                         gender: data.gender as 'Homem' | 'Mulher',
                         zipCode: data.zipCode,
-                        street: data.street,
+                        address: data.address,
                         number: data.number,
                         neighborhood: data.neighborhood,
                         city: data.city,
@@ -83,7 +85,14 @@ class RegisterUser {
                 return client
 
             } catch (err) {
+
                 console.log(err)
+
+                if (err instanceof yup.ValidationError) {
+                    console.log('Erros do Yup custom:', err.errors);
+                    throw new ApplicationError(err.errors);
+                }
+
                 throw new ApplicationError(
                     err instanceof ApplicationError ? err.message : 'Erro ao cadastrar usuário, tente novamente mais tarde'
                 )
