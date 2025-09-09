@@ -35,6 +35,7 @@ class RegisterUser {
                         username: data.email,
                         email: data.email,
                         password: data.password,
+                        role: 1,
                         blocked: false,
                         confirmed: true,
                         provider: 'local'
