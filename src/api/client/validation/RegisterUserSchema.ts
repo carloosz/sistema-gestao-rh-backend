@@ -40,7 +40,7 @@ export const registerUserSchema = yup.object().shape({
     .matches(/^\d{5}-?\d{3}$/, 'CEP deve ter um formato válido')
     .required('CEP é obrigatório'),
     
-  street: yup
+  address: yup
     .string()
     .min(5, 'Rua deve ter no mínimo 5 caracteres')
     .required('Rua é obrigatória'),

@@ -7,7 +7,7 @@ interface RegisterUserDTO {
     dateOfBirth: string;
     gender: string;
     zipCode: string;
-    street: string;
+    address: string;
     number: string;
     neighborhood: string;
     city: string;
