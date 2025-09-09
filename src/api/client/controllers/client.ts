@@ -14,5 +14,9 @@ export default factories.createCoreController('api::client.client', ({ strapi })
     find (ctx) {
         const clientService = new ListUsers();
         return clientService.listUsers(ctx);
+    },
+    findOne (ctx) {
+        const clientService = new ListUsers();
+        return clientService.listUserDetails(ctx);
     }
 }));
