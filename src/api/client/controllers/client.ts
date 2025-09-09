@@ -5,6 +5,7 @@
 import { factories } from '@strapi/strapi'
 import { RegisterUser } from '../services/RegisterUser';
 import { ListUsers } from '../services/ListUsers';
+import { DismissUser } from '../services/DismissUser';
 
 export default factories.createCoreController('api::client.client', ({ strapi }) => ({
     create (ctx) {
@@ -18,5 +19,9 @@ export default factories.createCoreController('api::client.client', ({ strapi })
     findOne (ctx) {
         const clientService = new ListUsers();
         return clientService.listUserDetails(ctx);
+    },
+    dismissUser (ctx) {
+        const clientService = new DismissUser();
+        return clientService.dismissUser(ctx);
     }
 }));
