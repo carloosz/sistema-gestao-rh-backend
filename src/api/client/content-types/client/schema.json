@@ -59,6 +59,10 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "client"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

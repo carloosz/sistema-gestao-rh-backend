@@ -392,6 +392,7 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     dateOfBirth: Schema.Attribute.Date;
     gender: Schema.Attribute.Enumeration<['Homem', 'Mulher']>;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
