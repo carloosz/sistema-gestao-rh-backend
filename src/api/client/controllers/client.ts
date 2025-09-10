@@ -6,6 +6,7 @@ import { factories } from '@strapi/strapi'
 import { RegisterUser } from '../services/RegisterUser';
 import { ListUsers } from '../services/ListUsers';
 import { DismissUser } from '../services/DismissUser';
+import { EditUser } from '../services/EditUser';
 
 export default factories.createCoreController('api::client.client', ({ strapi }) => ({
     create (ctx) {
@@ -23,5 +24,9 @@ export default factories.createCoreController('api::client.client', ({ strapi })
     dismissUser (ctx) {
         const clientService = new DismissUser();
         return clientService.dismissUser(ctx);
-    }
+    },
+    update (ctx) {
+        const clientService = new EditUser();
+        return clientService.editUser(ctx);
+    } 
 }));

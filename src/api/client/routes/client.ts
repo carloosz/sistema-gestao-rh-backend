@@ -27,6 +27,11 @@ module.exports = {
             method: "PUT",
             path: "/dismissUser/:id",
             handler: "client.dismissUser"
+        },
+        {
+            method: "PUT",
+            path: "/clients/:id",
+            handler: "client.update"
         }
     ]
 };

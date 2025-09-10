@@ -6,7 +6,7 @@ import  RegisterUserSchema from "../validation/RegisterUserSchema";
 
 import * as yup from 'yup';
 
-function timeStringToDate(
+export default function timeStringToDate(
   timeString: string, 
   baseYear: number = 2025, 
   baseMonth: number = 1, 
@@ -22,7 +22,7 @@ class RegisterUser {
         return strapi.db.transaction(async (trx) => {
             try {
 
-                let data : RegisterUserDTO = await RegisterUserSchema.validate(
+                const data : RegisterUserDTO = await RegisterUserSchema.validate(
                     ctx.request.body,
                     {
                         abortEarly: false,
