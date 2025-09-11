@@ -81,6 +81,7 @@ class ListUsers {
             })
 
             const formattedUsers = users.map(user => ({
+                id: user.client?.id,
                 documentId: user.client.documentId,
                 name: user.client?.name,
                 natureOfThePosition: user.client.professional_data?.natureOfThePosition,
@@ -137,6 +138,7 @@ class ListUsers {
             }
 
             const formattedUser = {
+                id: user.client?.id,
                 documentId: user.client.documentId,
                 name: user.client?.name,
                 isActive: user.client?.isActive,
