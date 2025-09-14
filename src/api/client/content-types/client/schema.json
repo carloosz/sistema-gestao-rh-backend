@@ -66,6 +66,12 @@
     },
     "registrationNumber": {
       "type": "string"
+    },
+    "requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::request.request",
+      "mappedBy": "client"
     }
   }
 }

@@ -409,6 +409,7 @@ export interface ApiClientClient extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     registrationNumber: Schema.Attribute.String;
+    requests: Schema.Attribute.Relation<'oneToMany', 'api::request.request'>;
     state: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -506,6 +507,39 @@ export interface ApiProfessionalDataProfessionalData
         'CULPA_RECIPROCA',
       ]
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRequestRequest extends Struct.CollectionTypeSchema {
+  collectionName: 'requests';
+  info: {
+    displayName: 'Request';
+    pluralName: 'requests';
+    singularName: 'request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    answer: Schema.Attribute.Text;
+    answeredAt: Schema.Attribute.DateTime;
+    client: Schema.Attribute.Relation<'manyToOne', 'api::client.client'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isFinished: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::request.request'
+    > &
+      Schema.Attribute.Private;
+    observation: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<['Reclamacao', 'Duvida', 'Sugestao']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1073,6 +1107,7 @@ declare module '@strapi/strapi' {
       'api::client.client': ApiClientClient;
       'api::day-of-work.day-of-work': ApiDayOfWorkDayOfWork;
       'api::professional-data.professional-data': ApiProfessionalDataProfessionalData;
+      'api::request.request': ApiRequestRequest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
