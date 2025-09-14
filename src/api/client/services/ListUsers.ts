@@ -94,7 +94,7 @@ class ListUsers {
                 users: formattedUsers,
                 page: Number(page),
                 pageSize: Number(pageSize),
-                totalPages: Math.ceil(users.length / Number(pageSize)),
+                totalPages: Math.ceil(countUsers / Number(pageSize)),
                 totalItems: countUsers,
                 totalThisPage: users.length
             }
