@@ -30,6 +30,27 @@ class RegisterUser {
                     }
                 )
 
+                const existingUser = await strapi.documents(
+                    'plugin::users-permissions.user'
+                ).findFirst({
+                    filters: {
+                        $or: [
+                            {
+                                email: data.email 
+                            },
+                            {
+                                client: {
+                                    cpf: data.cpf
+                                }
+                            }
+                        ]
+                    }
+                })
+
+                if (existingUser) {
+                    throw new ApplicationError('Dados já cadastrados')
+                }
+                
                 const user = await strapi.documents(
                     'plugin::users-permissions.user'
                 ).create({

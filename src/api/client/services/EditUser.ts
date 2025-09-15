@@ -23,6 +23,30 @@ class EditUser {
                     }
                 )
 
+                const existingUser = await strapi.documents(
+                    'plugin::users-permissions.user'
+                ).findFirst({
+                    filters: {
+                        documentId: {
+                            $ne: id 
+                        },
+                        $or: [
+                            {
+                                email: data.email
+                            },
+                            {
+                                client: {
+                                    cpf: data.cpf
+                                }
+                            }
+                        ]
+                    }
+                })
+
+                if (existingUser) {
+                    throw new ApplicationError('Dados já cadastrados, não é possível editar')
+                }
+
                 const user = await strapi.documents(
                     'plugin::users-permissions.user'
                 ).findFirst({
