@@ -5,6 +5,7 @@
 import { factories } from '@strapi/strapi'
 import { CreateRequest } from '../services/CreateRequest';
 import { ListRequests } from '../services/ListRequests';
+import { RespondRequest } from '../services/RespondRequest';
 
 export default factories.createCoreController('api::request.request', ({ strapi }) => ({
     create(ctx) {
@@ -18,6 +19,10 @@ export default factories.createCoreController('api::request.request', ({ strapi 
     find (ctx) {
         const requestService = new ListRequests();
         return requestService.listRequestsMaster(ctx);
+    },
+    respondRequest (ctx) {
+        const respondRequest = new RespondRequest();
+        return respondRequest.respondRequest(ctx);
     },
     findOne (ctx) {
         const requestService = new ListRequests();

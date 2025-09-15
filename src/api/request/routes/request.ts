@@ -37,6 +37,11 @@ module.exports = {
             method: "GET",
             path: "/listMyRequests",
             handler: "request.listMyRequests"
+        },
+        {
+            method: "PUT",
+            path: "/respondRequest/:id",
+            handler: "request.respondRequest"
         }
     ]
 };
