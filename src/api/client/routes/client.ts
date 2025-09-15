@@ -32,6 +32,16 @@ module.exports = {
             method: "PUT",
             path: "/clients/:id",
             handler: "client.update"
+        },
+        {
+            method: "POST",
+            path: "/forgotPassword",
+            handler: "client.forgotPassword"
+        },
+        {
+            method: "POST",
+            path: "/resetPassword",
+            handler: "client.resetPassword"
         }
     ]
 };
