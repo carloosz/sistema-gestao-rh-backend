@@ -7,7 +7,7 @@ class ListRequests {
         try {
 
             const userDocumentId = ctx.state.user.documentId
-            const { page = 1, pageSize = 9 } : { page: number, pageSize: number } = ctx.request.query
+            const { page = 1, pageSize = 9, sort } : { page: number, pageSize: number, sort: 'asc' | 'desc' } = ctx.request.query
             
             const client = await strapi.documents(
                 'api::client.client'
@@ -31,6 +31,7 @@ class ListRequests {
                         documentId: client.documentId
                     }
                 },
+                sort: sort ? `isFinished:${sort}` : 'createdAt:desc',
                 offset: ( Number(page || 1) - 1) * Number(pageSize || 9),
                 limit: Number(pageSize) || 9,
             })
@@ -112,7 +113,7 @@ class ListRequests {
     async listRequestsMaster (ctx) {
         try {
 
-            const { search, page = 1, pageSize = 9 } : { search: string, page: number, pageSize: number } = ctx.request.query
+            const { search, page = 1, pageSize = 9, sort } : { search: string, page: number, pageSize: number, sort: 'asc' | 'desc' } = ctx.request.query
 
             const requests = await strapi.documents(
                 'api::request.request'
@@ -137,6 +138,7 @@ class ListRequests {
                         }
                     ]
                 },
+                sort: sort ? `isFinished:${sort}` : 'createdAt:desc',
                 populate: {
                     client: {
                         fields: ['name']
