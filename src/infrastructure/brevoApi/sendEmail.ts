@@ -3,7 +3,7 @@ const { ApplicationError } = utils.errors;
 
 import axios from "axios";
 
-class sendEmail {
+class SendEmail {
     async sendEmail (
         options : {
             from: string;
@@ -60,4 +60,4 @@ class sendEmail {
     }
 }
 
-export { sendEmail }
+export { SendEmail }

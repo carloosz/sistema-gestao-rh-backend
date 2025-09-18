@@ -2,7 +2,7 @@ const utils = require("@strapi/utils");
 const { ApplicationError } = utils.errors;
 
 import * as crypto from 'crypto';
-import { sendEmail } from '../../../infrastructure/brevoApi/sendEmail';
+import { SendEmail } from '../../../infrastructure/brevoApi/sendEmail';
 
 class ForgotPassword {
     async forgotPassword (ctx) {
@@ -48,7 +48,7 @@ class ForgotPassword {
                 <p>Obrigado.</p>
                 `;
 
-            const emailProvider = new sendEmail()
+            const emailProvider = new SendEmail()
 
             await emailProvider.sendEmail({
                 from: process.env.EMAIL_FROM,
