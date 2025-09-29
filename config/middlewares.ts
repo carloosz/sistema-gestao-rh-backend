@@ -1,5 +1,4 @@
 export default [
-  'global::error-handler',
   'strapi::logger',
   'strapi::errors',
   'strapi::security',
