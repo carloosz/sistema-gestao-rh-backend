@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@redon2inc/strapi-plugin-refresh-token": "^0.1.4",
-    "@strapi/plugin-cloud": "5.23.0",
-    "@strapi/plugin-users-permissions": "5.23.0",
-    "@strapi/strapi": "5.23.0",
+    "@strapi/plugin-cloud": "5.23.6",
+    "@strapi/plugin-users-permissions": "5.23.6",
+    "@strapi/strapi": "5.23.6",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "pg": "8.8.0",
