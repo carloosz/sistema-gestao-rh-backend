@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "terms_and_privacy_policies",
+  "info": {
+    "singularName": "terms-and-privacy-policy",
+    "pluralName": "terms-and-privacy-policies",
+    "displayName": "TermsAndPrivacyPolicy"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "terms": {
+      "type": "text"
+    },
+    "privacyPolicy": {
+      "type": "text"
+    }
+  }
+}
