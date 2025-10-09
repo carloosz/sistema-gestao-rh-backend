@@ -1,14 +1,17 @@
-import * as yup from 'yup'; 
+import * as yup from 'yup';
 
-const createRequestSchema = yup.object().shape({
-    type: yup
-        .string()
-        .oneOf(['Reclamacao', 'Sugestao', 'Duvida'], 'Tipo deve ser Reclamacao, Sugestao ou Duvida')
-        .required('Tipo é obrigatório'),
+export const createRequestSchema = yup.object({
+  type: yup
+    .string()
+    .oneOf(['Reclamacao', 'Duvida', 'Sugestao'], 'Tipo deve ser Reclamacao, Duvida ou Sugestao')
+    .required('Tipo é obrigatório'),
+    
+  observation: yup
+    .string()
+    .required('Observação é obrigatória'),
+}); // ✅ Sem .shape()
 
-    observation: yup
-        .string()
-        .required('Observação é obrigatória'),
-});
+// ✅ Exporte o tipo inferido
+export type CreateRequestDTO = yup.InferType<typeof createRequestSchema>;
 
 export default createRequestSchema;

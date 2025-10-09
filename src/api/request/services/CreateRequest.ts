@@ -15,7 +15,7 @@ class CreateRequest {
                 const {
                     type,
                     observation
-                } : CreateRequestDTO = await createRequestSchema.validate(
+                } = await createRequestSchema.validate(
                     ctx.request.body,
                     {
                         abortEarly: false,
