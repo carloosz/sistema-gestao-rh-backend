@@ -34,10 +34,6 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1;
       }> &
       Schema.Attribute.DefaultTo<''>;
-    encryptedKey: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        minLength: 1;
-      }>;
     expiresAt: Schema.Attribute.DateTime;
     lastUsedAt: Schema.Attribute.DateTime;
     lifespan: Schema.Attribute.BigInteger;
@@ -540,6 +536,32 @@ export interface ApiRequestRequest extends Struct.CollectionTypeSchema {
     observation: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
     type: Schema.Attribute.Enumeration<['Reclamacao', 'Duvida', 'Sugestao']>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTermTerm extends Struct.SingleTypeSchema {
+  collectionName: 'terms';
+  info: {
+    displayName: 'Term';
+    pluralName: 'terms';
+    singularName: 'term';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::term.term'> &
+      Schema.Attribute.Private;
+    policy: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    terms: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1108,6 +1130,7 @@ declare module '@strapi/strapi' {
       'api::day-of-work.day-of-work': ApiDayOfWorkDayOfWork;
       'api::professional-data.professional-data': ApiProfessionalDataProfessionalData;
       'api::request.request': ApiRequestRequest;
+      'api::term.term': ApiTermTerm;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
