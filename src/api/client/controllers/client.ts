@@ -10,6 +10,7 @@ import { EditUser } from '../services/EditUser';
 import { ForgotPassword } from '../services/ForgotPassword';
 import { ResetPassword } from '../services/ResetPassword';
 import { ChangePassword } from '../services/ChangePassword';
+import { Pdf } from '../services/Pdf';
 
 export default factories.createCoreController('api::client.client', ({ strapi }) => ({
     create(ctx) {
@@ -43,5 +44,9 @@ export default factories.createCoreController('api::client.client', ({ strapi })
     changePassword(ctx) {
         const clientService = new ChangePassword();
         return clientService.changePassword(ctx);
-    }
+    },
+    exportUserPdf(ctx) {
+        const clientService = new Pdf();
+        return clientService.exportUserPdf(ctx);
+    },
 }));

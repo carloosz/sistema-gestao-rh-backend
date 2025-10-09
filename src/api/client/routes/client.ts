@@ -47,6 +47,11 @@ module.exports = {
             method: "POST",
             path: "/changePassword",
             handler: "client.changePassword"
+        },
+        {
+            method: "GET",
+            path: "/exportUserPdf/:id",
+            handler: "client.exportUserPdf"
         }
     ]
 };
