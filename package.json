@@ -16,18 +16,21 @@
   },
   "dependencies": {
     "@redon2inc/strapi-plugin-refresh-token": "^0.1.4",
-    "@strapi/plugin-cloud": "5.23.6",
-    "@strapi/plugin-users-permissions": "5.23.6",
-    "@strapi/strapi": "5.23.6",
+    "@strapi/plugin-cloud": "5.12.6",
+    "@strapi/plugin-users-permissions": "5.12.6",
+    "@strapi/strapi": "5.12.6",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "pg": "8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.0.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.6",
+    "@types/minimatch": "^6.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

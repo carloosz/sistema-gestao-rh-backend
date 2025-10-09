@@ -15,7 +15,7 @@ class EditUser {
 
                 const { id } : { id: string } = ctx.request.params;
 
-                const data : RegisterUserDTO = await editUserSchema.validate(
+                const data = await editUserSchema.validate(
                     ctx.request.body,
                     {
                         abortEarly: false,

@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
-export const registerUserSchema = yup.object().shape({
-  name : yup
+export const registerUserSchema = yup.object({
+  name: yup
     .string()
     .required('Nome é obrigatório'),
 
@@ -113,6 +113,8 @@ export const registerUserSchema = yup.object().shape({
   daysOfWork: yup
     .array()
     .required('Dias de trabalho é obrigatório'),
-});
+}); 
+
+export type RegisterUserDTO = yup.InferType<typeof registerUserSchema>;
 
 export default registerUserSchema;

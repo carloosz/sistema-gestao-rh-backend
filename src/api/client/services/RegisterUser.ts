@@ -22,7 +22,7 @@ class RegisterUser {
         return strapi.db.transaction(async (trx) => {
             try {
 
-                const data : RegisterUserDTO = await RegisterUserSchema.validate(
+                const data = await RegisterUserSchema.validate(
                     ctx.request.body,
                     {
                         abortEarly: false,
