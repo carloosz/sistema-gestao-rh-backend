@@ -42,6 +42,11 @@ module.exports = {
             method: "PUT",
             path: "/respondRequest/:id",
             handler: "request.respondRequest"
+        },
+        {
+            method: "GET",
+            path: "/exportRequestPdf/:id",
+            handler: "request.exportRequestPdf"
         }
     ]
 };

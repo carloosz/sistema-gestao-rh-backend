@@ -6,6 +6,7 @@ import { factories } from '@strapi/strapi'
 import { CreateRequest } from '../services/CreateRequest';
 import { ListRequests } from '../services/ListRequests';
 import { RespondRequest } from '../services/RespondRequest';
+import { Pdf } from '../services/Pdf';
 
 export default factories.createCoreController('api::request.request', ({ strapi }) => ({
     create(ctx) {
@@ -33,5 +34,9 @@ export default factories.createCoreController('api::request.request', ({ strapi 
     },
     delete (ctx) {
         
+    },
+    exportRequestPdf (ctx) {
+        const pdf = new Pdf();
+        return pdf.exportRequestPdf(ctx);
     }
 }));
