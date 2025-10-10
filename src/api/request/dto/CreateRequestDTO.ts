@@ -1,6 +1,6 @@
 interface CreateRequestDTO {
-    type: string
-    observation: string
+   type: string;
+   observation: string;
 }
 
-export { CreateRequestDTO }
+export { CreateRequestDTO };

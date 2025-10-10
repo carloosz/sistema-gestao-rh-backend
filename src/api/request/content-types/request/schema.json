@@ -1,42 +1,38 @@
 {
-  "kind": "collectionType",
-  "collectionName": "requests",
-  "info": {
-    "singularName": "request",
-    "pluralName": "requests",
-    "displayName": "Request"
-  },
-  "options": {
-    "draftAndPublish": false
-  },
-  "pluginOptions": {},
-  "attributes": {
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "Reclamacao",
-        "Duvida",
-        "Sugestao"
-      ]
-    },
-    "observation": {
-      "type": "text"
-    },
-    "isFinished": {
-      "type": "boolean",
-      "default": false
-    },
-    "answer": {
-      "type": "text"
-    },
-    "answeredAt": {
-      "type": "datetime"
-    },
-    "client": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::client.client",
-      "inversedBy": "requests"
-    }
-  }
+   "kind": "collectionType",
+   "collectionName": "requests",
+   "info": {
+      "singularName": "request",
+      "pluralName": "requests",
+      "displayName": "Request"
+   },
+   "options": {
+      "draftAndPublish": false
+   },
+   "pluginOptions": {},
+   "attributes": {
+      "type": {
+         "type": "enumeration",
+         "enum": ["Reclamacao", "Duvida", "Sugestao"]
+      },
+      "observation": {
+         "type": "text"
+      },
+      "isFinished": {
+         "type": "boolean",
+         "default": false
+      },
+      "answer": {
+         "type": "text"
+      },
+      "answeredAt": {
+         "type": "datetime"
+      },
+      "client": {
+         "type": "relation",
+         "relation": "manyToOne",
+         "target": "api::client.client",
+         "inversedBy": "requests"
+      }
+   }
 }

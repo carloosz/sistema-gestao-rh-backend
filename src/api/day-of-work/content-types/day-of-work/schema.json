@@ -1,24 +1,24 @@
 {
-  "kind": "collectionType",
-  "collectionName": "day_of_works",
-  "info": {
-    "singularName": "day-of-work",
-    "pluralName": "day-of-works",
-    "displayName": "DayOfWork"
-  },
-  "options": {
-    "draftAndPublish": false
-  },
-  "pluginOptions": {},
-  "attributes": {
-    "name": {
-      "type": "string"
-    },
-    "professional_datas": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::professional-data.professional-data",
-      "inversedBy": "days_of_work"
-    }
-  }
+   "kind": "collectionType",
+   "collectionName": "day_of_works",
+   "info": {
+      "singularName": "day-of-work",
+      "pluralName": "day-of-works",
+      "displayName": "DayOfWork"
+   },
+   "options": {
+      "draftAndPublish": false
+   },
+   "pluginOptions": {},
+   "attributes": {
+      "name": {
+         "type": "string"
+      },
+      "professional_datas": {
+         "type": "relation",
+         "relation": "manyToMany",
+         "target": "api::professional-data.professional-data",
+         "inversedBy": "days_of_work"
+      }
+   }
 }

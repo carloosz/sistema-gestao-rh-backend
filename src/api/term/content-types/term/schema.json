@@ -1,21 +1,21 @@
 {
-  "kind": "singleType",
-  "collectionName": "terms",
-  "info": {
-    "singularName": "term",
-    "pluralName": "terms",
-    "displayName": "Term",
-    "description": ""
-  },
-  "options": {
-    "draftAndPublish": false
-  },
-  "attributes": {
-    "terms": {
-      "type": "text"
-    },
-    "policy": {
-      "type": "text"
-    }
-  }
+   "kind": "singleType",
+   "collectionName": "terms",
+   "info": {
+      "singularName": "term",
+      "pluralName": "terms",
+      "displayName": "Term",
+      "description": ""
+   },
+   "options": {
+      "draftAndPublish": false
+   },
+   "attributes": {
+      "terms": {
+         "type": "text"
+      },
+      "policy": {
+         "type": "text"
+      }
+   }
 }
