@@ -5,6 +5,7 @@
 import { factories } from "@strapi/strapi";
 import { ListTerm } from "../services/ListTerm";
 import { AcceptTerms } from "../services/AcceptTerms";
+import { UpdateTerms } from "../services/UpdateTerms";
 
 export default factories.createCoreController(
    "api::term.term",
@@ -16,6 +17,8 @@ export default factories.createCoreController(
          return new AcceptTerms().execute(ctx);
       },
       async create() {},
-      async update() {},
+      async update(ctx) {
+         return new UpdateTerms().execute(ctx);
+      },
    }),
 );
