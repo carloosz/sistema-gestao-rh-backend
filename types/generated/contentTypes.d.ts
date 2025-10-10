@@ -1082,6 +1082,7 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    isReadTerms: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1095,6 +1096,7 @@ export interface PluginUsersPermissionsUser
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    readTermsAt: Schema.Attribute.DateTime;
     refresh_tokens: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::refresh-token.token'

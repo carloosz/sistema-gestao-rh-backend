@@ -90,6 +90,13 @@
       "relation": "oneToOne",
       "target": "api::client.client",
       "mappedBy": "user"
+    },
+    "isReadTerms": {
+      "type": "boolean",
+      "default": false
+    },
+    "readTermsAt": {
+      "type": "datetime"
     }
   }
 }
