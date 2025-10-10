@@ -545,6 +545,7 @@ export interface ApiRequestRequest extends Struct.CollectionTypeSchema {
 export interface ApiTermTerm extends Struct.SingleTypeSchema {
   collectionName: 'terms';
   info: {
+    description: '';
     displayName: 'Term';
     pluralName: 'terms';
     singularName: 'term';
@@ -561,7 +562,7 @@ export interface ApiTermTerm extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     policy: Schema.Attribute.Text;
     publishedAt: Schema.Attribute.DateTime;
-    terms: Schema.Attribute.String;
+    terms: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
