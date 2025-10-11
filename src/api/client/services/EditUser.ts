@@ -38,6 +38,8 @@ class EditUser {
                   },
                });
 
+            console.log(existingUser)
+
             if (existingUser) {
                throw new ApplicationError(
                   "Dados já cadastrados, não é possível editar",
@@ -155,7 +157,12 @@ class EditUser {
             }
 
             console.log(err);
-            throw new ApplicationError("Erro ao editar colaborador");
+
+            throw new ApplicationError(
+               err instanceof ApplicationError
+                  ? err.message
+                  : "Não foi possível editar o colaborador, tente novamente mais tarde",
+            )
          }
       });
    }
