@@ -23,7 +23,9 @@ class EditUser {
                .findFirst({
                   filters: {
                      client: {
-                        documentId: id,
+                        documentId: {
+                           $ne: id
+                        }
                      },
                      $or: [
                         {
