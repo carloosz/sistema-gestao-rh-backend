@@ -22,8 +22,8 @@ class EditUser {
                .documents("plugin::users-permissions.user")
                .findFirst({
                   filters: {
-                     documentId: {
-                        $ne: id,
+                     client: {
+                        documentId: id,
                      },
                      $or: [
                         {
