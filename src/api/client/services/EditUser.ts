@@ -12,6 +12,16 @@ class EditUser {
       return strapi.db.transaction(async (trx) => {
          try {
             const { id }: { id: string } = ctx.request.params;
+            const userDocumentId = ctx.state.user.documentId;
+            const roleId = ctx.state.user.role.id;
+
+            const ADMIN_ROLE_ID = 3;
+
+            if (id && roleId !== ADMIN_ROLE_ID) {
+               throw new ApplicationError(
+                  "Operação não permitida",
+               );
+            }
 
             const data = await editUserSchema.validate(ctx.request.body, {
                abortEarly: false,
@@ -24,7 +34,12 @@ class EditUser {
                   filters: {
                      client: {
                         documentId: {
-                           $ne: id
+                           $ne: id || 'a'
+                        },
+                        user: {
+                           documentId: {
+                              $ne: userDocumentId || 'a'
+                           }
                         }
                      },
                      $or: [
@@ -52,9 +67,16 @@ class EditUser {
                .documents("plugin::users-permissions.user")
                .findFirst({
                   filters: {
-                     client: {
-                        documentId: id,
-                     },
+                     $or : [
+                        {
+                           client: {
+                              documentId: id || 'a',
+                           }
+                        },
+                        {
+                           documentId: userDocumentId || 'a'
+                        }
+                     ]
                   },
                   populate: {
                      client: {
