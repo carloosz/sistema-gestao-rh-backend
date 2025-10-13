@@ -195,6 +195,54 @@ class ListUsers {
          );
       }
    }
+
+   async listMyInformations(ctx) {
+      try {
+         const userDocumentId = ctx.state?.user?.documentId;
+
+         const client = await strapi
+            .documents("api::client.client")
+            .findFirst({
+               filters: {
+                  user: {
+                     documentId: userDocumentId,
+                  },
+               },
+               populate:{
+                  user: true
+               }
+            });
+
+         if (!client) {
+            throw new ApplicationError("Usuário não encontrado");
+         }
+
+         const formattedUser = {
+            name: client.name,
+            cpf: client.cpf,
+            phone: client.phone,
+            email: client.user.email,
+            dateOfBirth: client.dateOfBirth,
+            gender: client.gender,
+            zipCode: client.zipCode,
+            address: client.address,
+            state: client.state,
+            city: client.city,
+            neighborhood: client.neighborhood,
+            number: client.number,
+         }
+
+         return formattedUser
+
+      } catch (err) {
+         console.log(err);
+         throw new ApplicationError(
+            err instanceof ApplicationError
+               ? err.message
+               : "Erro ao listar informações do perfil, tente novamente",
+         )
+      }
+   }
 }
 
 export { ListUsers };

@@ -53,5 +53,15 @@ module.exports = {
          path: "/exportUserPdf/:id",
          handler: "client.exportUserPdf",
       },
+      {
+         method: "PUT",
+         path: "/editMyInformations",
+         handler: "client.editMyInformations",
+      },
+      {
+         method: "GET",
+         path: "/listMyInformations",
+         handler: "client.listMyInformations",
+      }
    ],
 };

@@ -51,5 +51,13 @@ export default factories.createCoreController(
          const clientService = new Pdf();
          return clientService.exportUserPdf(ctx);
       },
+      editMyInformations(ctx) {
+         const clientService = new EditUser();
+         return clientService.editUser(ctx);
+      },
+      listMyInformations(ctx) {
+         const clientService = new ListUsers();
+         return clientService.listMyInformations(ctx);
+      },
    }),
 );
