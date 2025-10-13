@@ -55,8 +55,6 @@ class EditUser {
                   },
                });
 
-            console.log(existingUser)
-
             if (existingUser) {
                throw new ApplicationError(
                   "Dados já cadastrados, não é possível editar",
