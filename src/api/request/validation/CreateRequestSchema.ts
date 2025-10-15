@@ -10,9 +10,8 @@ export const createRequestSchema = yup.object({
       .required("Tipo é obrigatório"),
 
    observation: yup.string().required("Observação é obrigatória"),
-}); // ✅ Sem .shape()
+});
 
-// ✅ Exporte o tipo inferido
 export type CreateRequestDTO = yup.InferType<typeof createRequestSchema>;
 
 export default createRequestSchema;
