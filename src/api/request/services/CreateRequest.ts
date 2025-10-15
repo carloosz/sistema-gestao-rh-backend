@@ -42,7 +42,12 @@ class CreateRequest {
             let newFile;
 
             if (file) {
-               console.log("file: ", file);
+               const MAX_FILE_SIZE = 15 * 1024 * 1024; //15 mb
+
+               if (file.size > MAX_FILE_SIZE) {
+                  throw new ApplicationError("Arquivo muito grande. O tamanho máximo permitido é 15 MB");
+               }
+
                newFile = await strapi.plugins[
                   "upload"
                ].services.upload.upload({
