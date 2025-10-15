@@ -91,6 +91,13 @@ class ListRequests {
                   client: {
                      fields: ["name"],
                   },
+                  file: {
+                     fields: [
+                        "url",
+                        "name",
+                        "size"
+                     ],
+                  },
                },
             });
 
