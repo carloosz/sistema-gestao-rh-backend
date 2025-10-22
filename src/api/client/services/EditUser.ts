@@ -96,6 +96,7 @@ class EditUser {
             await strapi.documents("plugin::users-permissions.user").update({
                documentId: user.documentId,
                data: {
+                  username: data.email ?? user.email,
                   email: data.email ?? user.email,
                   password: data.password ?? user.password,
                },
