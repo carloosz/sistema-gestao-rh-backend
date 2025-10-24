@@ -127,7 +127,9 @@ class Pdf {
             .text("Anexo", 300, 240)
             .font("Lato-Regular")
             .opacity(0.7)
-            .text(request.file ? request.file.name : "N/A", 300, 260);
+            .text(request.file ? request.file.name : "N/A", 300, 260, {
+               width: 220
+            });
 
          let observation = request.observation;
 
