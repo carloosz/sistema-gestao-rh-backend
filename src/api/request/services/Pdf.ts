@@ -113,7 +113,7 @@ class Pdf {
             .text("Data", 300, 180)
             .font("Lato-Regular")
             .opacity(0.7)
-            .text(new Date(request.createdAt).toLocaleString(), 300, 200);
+            .text(new Date(request.createdAt).toLocaleString('pt-BR'), 300, 200);
 
          doc.font("Lato-Bold")
             .opacity(1)
@@ -160,7 +160,7 @@ class Pdf {
             .opacity(0.7)
             .text(
                request.answeredAt
-                  ? new Date(request.answeredAt).toLocaleString()
+                  ? new Date(request.answeredAt).toLocaleString('pt-BR')
                   : "N/A",
                60,
                450,
@@ -187,7 +187,7 @@ class Pdf {
 
          doc.text("Data da impressão: ", 60, 800)
             .opacity(0.7)
-            .text(now.toLocaleString(), 165, 800);
+            .text(now.toLocaleString('pt-BR'), 165, 800);
 
          doc.end();
 
