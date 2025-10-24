@@ -182,6 +182,9 @@ class Pdf {
             })
             .opacity(1);
 
+         const now = new Date();
+         now.setHours(now.getHours() - 3);
+
          doc.text("Data da impressão: ", 60, 800)
             .opacity(0.7)
             .text(new Date().toLocaleString(), 165, 800);
