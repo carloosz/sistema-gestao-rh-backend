@@ -187,7 +187,7 @@ class Pdf {
 
          doc.text("Data da impressão: ", 60, 800)
             .opacity(0.7)
-            .text(new Date().toLocaleString(), 165, 800);
+            .text(now.toLocaleString(), 165, 800);
 
          doc.end();
 
