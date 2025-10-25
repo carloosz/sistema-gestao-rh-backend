@@ -189,7 +189,11 @@ class Pdf {
 
          doc.text("Data da impressão: ", 60, 800)
             .opacity(0.7)
-            .text(now.toLocaleString('pt-BR'), 165, 800);
+            .text(now.toLocaleString("pt-BR"), 165, 800)
+            .opacity(1)
+            .text('Página', 460, 800)
+            .opacity(0.7)
+            .text('1 de 1', 500, 800);
 
          doc.end();
 
