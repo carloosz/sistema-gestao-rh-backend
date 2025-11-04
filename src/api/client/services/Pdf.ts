@@ -4,10 +4,12 @@ const pdfkit = require('pdfkit');
 const fs = require('fs');
 
 class Pdf {
+   //metodo para gerar o pdf com as informacoes do colaborador
    async exportUserPdf(ctx) {
       try {
          const { id }: { id: string } = ctx.request.params;
 
+         //achar o colaborador com base no id fornecido
          const client = await strapi
             .documents("api::client.client")
             .findOne({
@@ -26,21 +28,25 @@ class Pdf {
             throw new ApplicationError("Colaborador não encontrado");
          }
 
+         //inicializar o documento do PDF
          const doc = new pdfkit({ size: "A4" }); //841.89, 595.28
          doc.page.margins = { top: 0, left: 0, right: 0, bottom: 0 };
 
+         //registrar as fontes personalizadas que serao usadas (escolhi a mesma fonte usada no front)
          doc.registerFont(
             "Lato-Regular",
             "./public/fonts/lato/Lato-Regular.ttf",
          )
-            .registerFont("Lato-Bold", "./public/fonts/lato/Lato-Bold.ttf")
-            .registerFont("Lato-Black", "./public/fonts/lato/Lato-Black.ttf");
+         .registerFont("Lato-Bold", "./public/fonts/lato/Lato-Bold.ttf")
+         .registerFont("Lato-Black", "./public/fonts/lato/Lato-Black.ttf");
 
+         //inicializar nome do arquivo e stream de escrita
          const fileName = `colaborador_${client.id}.pdf`;
          const stream = fs.createWriteStream("public/pdf/" + fileName);
 
          doc.pipe(stream);
 
+         //definir quadrados pra efeito visual no canto superior esquerdo
          const squareSize = 20;
          const squares = [
             // Linha 1 (topo)
@@ -69,12 +75,14 @@ class Pdf {
             { x: 0, y: squareSize * 4, color: "#404040" },
          ];
 
+         //desenhar os quadrados
          squares.forEach((square) => {
             doc.rect(square.x, square.y, squareSize, squareSize).fill(
                square.color,
             );
          });
 
+         //escrever logo para o cabecalho, e inserir as informacoes do colaborador
          doc.font("Lato-Black")
             .fontSize(30)
             .fillColor("#2E519C")

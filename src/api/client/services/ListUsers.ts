@@ -4,6 +4,7 @@ const { ApplicationError } = utils.errors;
 class ListUsers {
    async listUsers(ctx) {
       try {
+         //declarar parametros que serao recebidos na query da requisicao
          const {
             page = 1,
             pageSize = 9,
@@ -16,6 +17,7 @@ class ListUsers {
             isActive?: boolean;
          } = ctx.request.query;
 
+         //buscar todos usuarios que correspondem aos filtros, aplicando a paginacao
          const users = await strapi
             .documents("plugin::users-permissions.user")
             .findMany({
@@ -52,6 +54,7 @@ class ListUsers {
                },
             });
 
+         //contar todos usuarios, tirando a paginacao
          const countUsers = await strapi
             .documents("plugin::users-permissions.user")
             .count({
@@ -79,6 +82,7 @@ class ListUsers {
                },
             });
 
+         //pegar somente informacoes relevantes para a listagem
          const formattedUsers =
             users.map((user) => ({
                id: user.client?.id,
@@ -95,6 +99,7 @@ class ListUsers {
                   : null,
             })) || [];
 
+         //retornar os usuarios e informacoes de paginacao
          return {
             users: formattedUsers,
             page: Number(page),
@@ -104,6 +109,7 @@ class ListUsers {
             totalThisPage: users.length,
          };
       } catch (err) {
+         //tratamento de erros padrao
          console.log(err);
          throw new ApplicationError(
             err instanceof ApplicationError
@@ -117,6 +123,7 @@ class ListUsers {
       try {
          const { id }: { id: string } = ctx.request.params;
 
+         //obter usuario especifico com base no id fornecido
          const user = await strapi
             .documents("plugin::users-permissions.user")
             .findFirst({
@@ -142,6 +149,7 @@ class ListUsers {
             throw new ApplicationError("Colaborador não encontrado");
          }
 
+         //formatar informacoes para retorno
          const formattedUser = {
             id: user.client?.id,
             documentId: user.client.documentId,
@@ -185,8 +193,10 @@ class ListUsers {
             typeOfTermination: user.client.professional_data?.typeOfTermination,
          };
 
+         //retornar usuario formatado
          return formattedUser;
       } catch (err) {
+         //tratamento de erros padrao
          console.log(err);
          throw new ApplicationError(
             err instanceof ApplicationError
@@ -198,8 +208,10 @@ class ListUsers {
 
    async listMyInformations(ctx) {
       try {
+         //obter id do usuario logado
          const userDocumentId = ctx.state?.user?.documentId;
 
+         //pegar informacoes do usuario logado
          const client = await strapi
             .documents("api::client.client")
             .findFirst({
@@ -217,6 +229,7 @@ class ListUsers {
             throw new ApplicationError("Usuário não encontrado");
          }
 
+         //formatar informacoes
          const formattedUser = {
             name: client.name,
             cpf: client.cpf,
@@ -232,6 +245,7 @@ class ListUsers {
             number: client.number,
          }
 
+         //retornar usuario logado
          return formattedUser
 
       } catch (err) {

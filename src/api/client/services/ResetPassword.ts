@@ -2,9 +2,11 @@ const utils = require("@strapi/utils");
 const { ApplicationError } = utils.errors;
 
 class ResetPassword {
+   //metodo pra resetar senha do usuario
    async resetPassword(ctx) {
       return strapi.db.transaction(async (trx) => {
          try {
+            //pegando dados necessarios, passados no corpo da requisicao
             const {
                password,
                passwordConfirmation,
@@ -15,6 +17,7 @@ class ResetPassword {
                code: string;
             } = ctx.request.body;
 
+            //algumas verifcacoes
             if (!password) {
                throw new ApplicationError("Senha deve ser informada");
             }
@@ -29,6 +32,7 @@ class ResetPassword {
                throw new ApplicationError("Senhas não conferem");
             }
 
+            //achar usuario com base no token de redefinicao
             const user = await strapi
                .documents("plugin::users-permissions.user")
                .findFirst({
@@ -41,6 +45,7 @@ class ResetPassword {
                throw new ApplicationError("Usuário não encontrado");
             }
 
+            //atualizar senha e resetar o token (para nao ser usado novamente)
             await strapi.documents("plugin::users-permissions.user").update({
                documentId: user.documentId,
                data: {
@@ -54,6 +59,7 @@ class ResetPassword {
                message: "Senha alterada com sucesso",
             };
          } catch (err) {
+            //tratamento de erros padraop
             console.log(err);
             throw new ApplicationError(
                err instanceof ApplicationError

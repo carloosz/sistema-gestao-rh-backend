@@ -1,6 +1,9 @@
+//import do jwt, para gerar o token
 const jwt = require("jsonwebtoken");
+//declarando o id do plugin do refresh
 const PLUGIN_ID = "refresh-token";
 
+//funcao para calcular a validade do token
 function calculateMaxAge(param) {
    const unit = param.slice(-1);
    const value = parseInt(param.slice(0, -1));
@@ -27,6 +30,7 @@ module.exports = () => {
    return async (ctx, next) => {
       await next();
 
+      //interceptar as requisicoes de login
       const config2 = strapi.config.get(`plugin::${PLUGIN_ID}`) as any;
       if (
          ctx.request.method === "POST" &&
@@ -34,12 +38,13 @@ module.exports = () => {
       ) {
          const requestRefresh =
             ctx.request.body?.requestRefresh || config2.requestRefreshOnAll;
-
+         //verificar se a resposta da req foi bem sucedida
          if (
             ctx.response.body &&
             ctx.response.message === "OK" &&
             requestRefresh
          ) {
+            //emitir o refresh token
             const refreshEntry = await strapi
                .plugin(PLUGIN_ID)
                .service("service")

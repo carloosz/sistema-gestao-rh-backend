@@ -1,11 +1,16 @@
+//imports para lancamento de erro
 const utils = require("@strapi/utils");
 const { ApplicationError } = utils.errors;
 
 class DismissUser {
+   //metodo para demitir colaborador
    async dismissUser(ctx) {
+      //usar transacao para garantir integridade dos dados (se der erro, os dados nao serao alterados)
       return strapi.db.transaction(async (trx) => {
          try {
+            //obtendo id do colaborador pelo parametro na url da req
             const { id }: { id: string } = ctx.request.params;
+            //obtendo dados relevantes no body
             const {
                date,
                observation,
@@ -16,6 +21,7 @@ class DismissUser {
                typeOfTermination: string;
             } = ctx.request.body;
 
+            //obter usuario especifico com base no id fornecido
             const user = await strapi
                .documents("plugin::users-permissions.user")
                .findFirst({
@@ -41,6 +47,7 @@ class DismissUser {
                throw new ApplicationError("Colaborador já desligado");
             }
 
+            //desligar colaborador
             await strapi.documents("api::client.client").update({
                documentId: user.client?.documentId,
                data: {
@@ -63,6 +70,7 @@ class DismissUser {
                message: "colaborador demitido com sucesso",
             };
          } catch (err) {
+            //tratamento de erros
             console.log(err);
             throw new ApplicationError(
                err instanceof ApplicationError

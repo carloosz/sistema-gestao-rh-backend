@@ -1,33 +1,40 @@
+//imports para lancamento de erros
 const utils = require("@strapi/utils");
 const { ApplicationError } = utils.errors;
 
-import { RegisterUserDTO } from "../dto/RegisterUserDTO";
+//import do schema yup para validacao dos campos
 import editUserSchema from "../validation/EditUserSchema";
 
 import * as yup from "yup";
 import timeStringToDate from "./RegisterUser";
 
 class EditUser {
+   //metodo para editar o colaborador
    async editUser(ctx) {
       return strapi.db.transaction(async (trx) => {
          try {
+            //pegando alguns dados importantes na requisicao
             const { id }: { id: string } = ctx.request.params;
             const userDocumentId = ctx.state.user.documentId;
             const roleId = ctx.state.user.role.id;
 
+            //declarando id da role admin
             const ADMIN_ROLE_ID = 3;
 
+            //usuario colaborador nao pode editar informacoes de outro usuario, somente ele mesmo
             if (id && roleId !== ADMIN_ROLE_ID) {
                throw new ApplicationError(
                   "Operação não permitida",
                );
             }
 
+            //validando os dados recebidos com o schema yup
             const data = await editUserSchema.validate(ctx.request.body, {
                abortEarly: false,
                stripUnknown: true,
             });
 
+            //verificando se o email ou cpf ja estao cadastrados em outro usuario
             const existingUser = await strapi
                .documents("plugin::users-permissions.user")
                .findFirst({
@@ -55,12 +62,14 @@ class EditUser {
                   },
                });
 
+               //se estiver, lanca erro
             if (existingUser) {
                throw new ApplicationError(
                   "Dados já cadastrados, não é possível editar",
                );
             }
 
+            //achar usuario correspondente com base no id
             const user = await strapi
                .documents("plugin::users-permissions.user")
                .findFirst({
@@ -93,6 +102,7 @@ class EditUser {
                throw new ApplicationError("Colaborador não encontrado");
             }
 
+            //atualizando informacoes
             await strapi.documents("plugin::users-permissions.user").update({
                documentId: user.documentId,
                data: {
@@ -157,6 +167,7 @@ class EditUser {
                   },
                });
 
+            //retornar informacoes atualizadas
             return await strapi
                .documents("plugin::users-permissions.user")
                .findOne({
@@ -174,6 +185,7 @@ class EditUser {
                   },
                });
          } catch (err) {
+            //tratamento de erros
             if (err instanceof yup.ValidationError) {
                console.log("Erros do Yup custom:", err.errors);
                throw new ApplicationError(err.errors);

@@ -1,11 +1,11 @@
 const utils = require("@strapi/utils");
 const { ApplicationError } = utils.errors;
 
-import { RegisterUserDTO } from "../dto/RegisterUserDTO";
 import RegisterUserSchema from "../validation/RegisterUserSchema";
 
 import * as yup from "yup";
 
+//funcao utilitaria para converter uma string de hora em um objeto Date
 export default function timeStringToDate(
    timeString: string,
    baseYear: number = 2025,
@@ -17,14 +17,18 @@ export default function timeStringToDate(
 }
 
 class RegisterUser {
+   //metodo para cadastrar um novo colaborador
    async registerUser(ctx) {
+      //usar transacao para garantir integridade dos dados (se der erro, os dados nao serao alterados)
       return strapi.db.transaction(async (trx) => {
          try {
+            //validar os dados com base no schema yup definido
             const data = await RegisterUserSchema.validate(ctx.request.body, {
                abortEarly: false,
                stripUnknown: true,
             });
 
+            //verificar se o email ou cpf ja estao cadastrados
             const existingUser = await strapi
                .documents("plugin::users-permissions.user")
                .findFirst({
@@ -46,6 +50,7 @@ class RegisterUser {
                throw new ApplicationError("Dados já cadastrados");
             }
 
+            //criar registro na tabela de usuario e suas relacoes
             const user = await strapi
                .documents("plugin::users-permissions.user")
                .create({
@@ -97,8 +102,10 @@ class RegisterUser {
                   },
                });
 
+            //retornar o colaborador cadastrado
             return client;
          } catch (err) {
+            //tratamento de erros, verificando inclusive se foi um erro do yup
             console.log(err);
 
             if (err instanceof yup.ValidationError) {
