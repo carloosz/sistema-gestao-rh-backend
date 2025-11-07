@@ -19,7 +19,7 @@ class EditUser {
             const roleId = ctx.state.user.role.id;
 
             //declarando id da role admin
-            const ADMIN_ROLE_ID = 3;
+            const ADMIN_ROLE_ID = 34;
 
             //usuario colaborador nao pode editar informacoes de outro usuario, somente ele mesmo
             if (id && roleId !== ADMIN_ROLE_ID) {
