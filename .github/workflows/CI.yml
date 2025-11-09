@@ -15,20 +15,27 @@ jobs:
            uses: actions/setup-node@v3
            with:
               node-version: 18.x
-              cache: "npm"
 
          - name: Install System Dependencies
            run: |
               sudo apt-get update
-              sudo apt-get install -y libvips-dev build-essential python3 pkg-config
+              sudo apt-get install -y \
+                build-essential \
+                libvips-dev \
+                libglib2.0-dev \
+                libcairo2-dev \
+                libpango1.0-dev \
+                libjpeg-dev \
+                libgif-dev \
+                librsvg2-dev \
+                python3 \
+                pkg-config
 
          - name: Install dependencies
            run: npm install
 
          - name: Rebuild Sharp
-           run: |
-              npm rebuild sharp --build-from-source
-              npm install sharp --build-from-source
+           run: npm rebuild sharp --build-from-source
 
          - name: Run Build
            run: npm run build
@@ -55,6 +62,6 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
                  cd ${{ secrets.PROJECT_PATH }}
-                 npm ci --omit=dev
+                 npm install --omit=dev
                  npm run build
                  pm2 restart all
