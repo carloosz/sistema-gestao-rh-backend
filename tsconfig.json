@@ -6,24 +6,25 @@
       "target": "ES2019",
       "strict": false,
       "skipLibCheck": true,
-      "types": ["node","jest"],
+      "types": [],
       "forceConsistentCasingInFileNames": true,
       "incremental": true,
       "esModuleInterop": true,
       "resolveJsonModule": true,
-      "noEmitOnError": false,
+      "noEmitOnError": true,
       "noImplicitThis": true,
       "outDir": "dist",
-      "rootDir": ".",
-      "allowSyntheticDefaultImports": true,
+      "rootDir": "."
    },
    "include": [
+      // Include root files
       "./",
+      // Include all ts files
       "./**/*.ts",
+      // Include all js files
       "./**/*.js",
-      "src/**/*.json",
-      "src/**/tests/**/*.test.ts",
-      "tests/**/*.ts"
+      // Force the JSON files in the src folder to be included
+      "src/**/*.json"
    ],
 
    "exclude": [
@@ -32,6 +33,12 @@
       "dist/",
       ".cache/",
       ".tmp/",
-      "src/admin/"
+
+      // Do not include admin files in the server compilation
+      "src/admin/",
+      // Do not include test files
+      "**/*.test.*",
+      // Do not include plugins in the server compilation
+      "src/plugins/**"
    ]
 }

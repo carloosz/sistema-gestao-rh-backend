@@ -36,9 +36,9 @@ class Pdf {
          doc.registerFont(
             "Lato-Regular",
             "./public/fonts/lato/Lato-Regular.ttf",
-         );
-         doc.registerFont("Lato-Bold", "./public/fonts/lato/Lato-Bold.ttf");
-         doc.registerFont("Lato-Black", "./public/fonts/lato/Lato-Black.ttf");
+         )
+         .registerFont("Lato-Bold", "./public/fonts/lato/Lato-Bold.ttf")
+         .registerFont("Lato-Black", "./public/fonts/lato/Lato-Black.ttf");
 
          //inicializar nome do arquivo e stream de escrita
          const fileName = `colaborador_${client.id}.pdf`;

@@ -1,62 +1,48 @@
 {
-  "name": "sgrh-backend",
-  "version": "0.1.0",
-  "private": true,
-  "description": "A Strapi application",
-  "scripts": {
-    "build": "strapi build",
-    "console": "strapi console",
-    "deploy": "strapi deploy",
-    "dev": "strapi develop",
-    "develop": "strapi develop",
-    "start": "strapi start",
-    "strapi": "strapi",
-    "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "test": "jest",
-    "test:unit": "jest --selectProjects unit",
-    "test:integration": "NODE_ENV=test jest --selectProjects integration",
-    "test:watch": "jest --watch"
-  },
-  "dependencies": {
-    "@redon2inc/strapi-plugin-refresh-token": "^0.1.4",
-    "@strapi/plugin-cloud": "5.12.6",
-    "@strapi/plugin-users-permissions": "5.12.6",
-    "@strapi/strapi": "5.12.6",
-    "axios": "^1.12.2",
-    "bcrypt": "^6.0.0",
-    "pdfkit": "^0.17.2",
-    "pg": "8.8.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0",
-    "yup": "^1.7.1"
-  },
-  "devDependencies": {
-    "@types/body-parser": "^1.19.6",
-    "@types/chai": "^5.2.3",
-    "@types/jest": "^30.0.0",
-    "@types/minimatch": "^6.0.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^24.10.0",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "chai": "4.3.7",
-    "jest": "^30.2.0",
-    "mocha": "^11.7.4",
-    "sqlite3": "^5.1.7",
-    "supertest": "^7.1.4",
-    "ts-jest": "^29.4.5",
-    "ts-node": "^10.9.2",
-    "typescript": "^5"
-  },
-  "engines": {
-    "node": ">=18.0.0 <=22.x.x",
-    "npm": ">=6.0.0"
-  },
-  "strapi": {
-    "uuid": "29136ec5-ad2e-4acd-9ce6-8e9b42c9b808",
-    "installId": "a011dcab54b36f9c1c2898c56180543cc5b1e2c294b262af219bb07588a088db"
-  }
+   "name": "sgrh-backend",
+   "version": "0.1.0",
+   "private": true,
+   "description": "A Strapi application",
+   "scripts": {
+      "build": "strapi build",
+      "console": "strapi console",
+      "deploy": "strapi deploy",
+      "dev": "strapi develop",
+      "develop": "strapi develop",
+      "start": "strapi start",
+      "strapi": "strapi",
+      "upgrade": "npx @strapi/upgrade latest",
+      "upgrade:dry": "npx @strapi/upgrade latest --dry"
+   },
+   "dependencies": {
+      "@redon2inc/strapi-plugin-refresh-token": "^0.1.4",
+      "@strapi/plugin-cloud": "5.12.6",
+      "@strapi/plugin-users-permissions": "5.12.6",
+      "@strapi/strapi": "5.12.6",
+      "axios": "^1.12.2",
+      "bcrypt": "^6.0.0",
+      "pdfkit": "^0.17.2",
+      "pg": "8.8.0",
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0",
+      "react-router-dom": "^6.0.0",
+      "styled-components": "^6.0.0",
+      "yup": "^1.7.1"
+   },
+   "devDependencies": {
+      "@types/body-parser": "^1.19.6",
+      "@types/minimatch": "^6.0.0",
+      "@types/node": "^20",
+      "@types/react": "^18",
+      "@types/react-dom": "^18",
+      "typescript": "^5"
+   },
+   "engines": {
+      "node": ">=18.0.0 <=22.x.x",
+      "npm": ">=6.0.0"
+   },
+   "strapi": {
+      "uuid": "29136ec5-ad2e-4acd-9ce6-8e9b42c9b808",
+      "installId": "a011dcab54b36f9c1c2898c56180543cc5b1e2c294b262af219bb07588a088db"
+   }
 }
