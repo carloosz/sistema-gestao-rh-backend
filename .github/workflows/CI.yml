@@ -50,5 +50,6 @@ jobs:
                   export NODE_ENV=production
                   rm -rf node_modules .cache .tmp build
                   npm install --omit=dev --legacy-peer-deps --ignore-engines
+                  npm install --include=optional sharp
                   npm run build
                   pm2 restart all
