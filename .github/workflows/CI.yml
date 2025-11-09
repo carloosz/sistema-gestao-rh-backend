@@ -14,7 +14,7 @@ jobs:
          - name: Setup Node.js
            uses: actions/setup-node@v3
            with:
-              node-version: "18.x"
+              node-version: "20.x"
               cache: "npm"
 
          - name: Install System Dependencies
@@ -22,20 +22,19 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y libvips-dev
 
-         - name: Clean and Install dependencies
+         - name: Install dependencies
            run: |
               rm -rf node_modules
               rm -rf .cache
               rm -rf build
-              npm install
+              npm install --legacy-peer-deps
 
-         - name: Rebuild native modules
-           run: npm rebuild @swc/core
-
-         - name: Run Build
+         - name: Build with TypeScript compiler
            run: npm run build
            env:
               NODE_ENV: production
+              STRAPI_DISABLE_UPDATE_NOTIFICATION: true
+              STRAPI_TELEMETRY_DISABLED: true
 
          - name: Run Tests
            run: npm run test:unit --coverage
@@ -47,7 +46,7 @@ jobs:
               username: ${{ secrets.USERNAME }}
               port: 22
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              source: ".,!node_modules,!.cache"
+              source: ".,!node_modules,!.cache,!.tmp"
               target: ${{ secrets.PROJECT_PATH }}
 
          - name: Restart application
@@ -60,8 +59,7 @@ jobs:
               script: |
                  cd ${{ secrets.PROJECT_PATH }}
                  export NODE_ENV=production
-                 rm -rf node_modules .cache
-                 npm ci --omit=dev
-                 npm rebuild @swc/core
+                 rm -rf node_modules .cache .tmp
+                 npm install --omit=dev --legacy-peer-deps
                  npm run build
                  pm2 restart all
