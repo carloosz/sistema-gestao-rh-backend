@@ -16,8 +16,7 @@
     "test": "jest",
     "test:unit": "jest --selectProjects unit",
     "test:integration": "NODE_ENV=test jest --selectProjects integration",
-    "test:watch": "jest --watch",
-    "postinstall": "strapi build --no-optimization"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@redon2inc/strapi-plugin-refresh-token": "^0.1.4",
