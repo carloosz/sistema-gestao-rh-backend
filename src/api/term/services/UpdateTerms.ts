@@ -24,8 +24,8 @@ class UpdateTerms {
             return strapi.documents("api::term.term").update({
                documentId: term.documentId,
                data: {
-                  terms: terms && terms.trim() !== "" ? terms : term.terms,
-                  policy: policy && policy.trim() !== "" ? policy : term.policy,
+                  terms: terms && terms.trim() !== "" ? terms.trim() : term.terms,
+                  policy: policy && policy.trim() !== "" ? policy.trim() : term.policy,
                   updatedAt: new Date(),
                },
             });
