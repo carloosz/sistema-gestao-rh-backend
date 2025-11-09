@@ -14,7 +14,7 @@ class ListUsers {
             page?: number;
             pageSize?: number;
             search?: string;
-            isActive?: boolean;
+            isActive?: any;
          } = ctx.request.query;
 
          //buscar todos usuarios que correspondem aos filtros, aplicando a paginacao
@@ -74,7 +74,7 @@ class ListUsers {
                      },
                   ],
                   client: {
-                     isActive: isActive || true,
+                     isActive: (isActive !== "true" && isActive !== "false") ? true : isActive,
                   },
                   role: {
                      id: 1,
@@ -104,7 +104,7 @@ class ListUsers {
             users: formattedUsers,
             page: Number(page),
             pageSize: Number(pageSize),
-            totalPages: Math.ceil(countUsers / Number(pageSize)),
+            totalPages: Math.ceil(countUsers / Number(pageSize)) || 1,
             totalItems: countUsers,
             totalThisPage: users.length,
          };
@@ -146,7 +146,7 @@ class ListUsers {
             });
 
          if (!user) {
-            throw new ApplicationError("Colaborador não encontrado");
+            throw new ApplicationError("Colaborador não encontrado");
          }
 
          //formatar informacoes para retorno
