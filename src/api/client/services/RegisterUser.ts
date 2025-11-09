@@ -101,7 +101,6 @@ class RegisterUser {
                         data.daysOfWork.length > 0 ? data.daysOfWork : null,
                   },
                });
-
             //retornar o colaborador cadastrado
             return client;
          } catch (err) {
