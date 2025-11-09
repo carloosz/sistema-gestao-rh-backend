@@ -19,7 +19,7 @@ export default function timeStringToDate(
 class RegisterUser {
    //metodo para cadastrar um novo colaborador
    async registerUser(ctx) {
-      //usar transacao para garantir integridade dos dados (se der erro, os dados nao serao alterados)
+      //usar transacao para garantir integridade dos dados (se der erro, os dados não serao alterados)
       return strapi.db.transaction(async (trx) => {
          try {
             //validar os dados com base no schema yup definido
