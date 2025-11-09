@@ -22,19 +22,8 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y libvips-dev
 
-         - name: Install dependencies
-           run: |
-              rm -rf node_modules
-              rm -rf .cache
-              rm -rf build
-              npm install --legacy-peer-deps
-
-         - name: Build with TypeScript compiler
-           run: npm run build
-           env:
-              NODE_ENV: production
-              STRAPI_DISABLE_UPDATE_NOTIFICATION: true
-              STRAPI_TELEMETRY_DISABLED: true
+         - name: Install dependencies (for tests only)
+           run: npm install --legacy-peer-deps
 
          - name: Run Tests
            run: npm run test:unit --coverage
@@ -46,7 +35,7 @@ jobs:
               username: ${{ secrets.USERNAME }}
               port: 22
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              source: ".,!node_modules,!.cache,!.tmp"
+              source: ".,!node_modules,!.cache,!.tmp,!build"
               target: ${{ secrets.PROJECT_PATH }}
 
          - name: Restart application
@@ -59,7 +48,7 @@ jobs:
               script: |
                  cd ${{ secrets.PROJECT_PATH }}
                  export NODE_ENV=production
-                 rm -rf node_modules .cache .tmp
+                 rm -rf node_modules .cache .tmp build
                  npm install --omit=dev --legacy-peer-deps
                  npm run build
                  pm2 restart all
