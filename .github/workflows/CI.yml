@@ -47,8 +47,8 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
                  cd ${{ secrets.PROJECT_PATH }}
-                 export NODE_ENV=production
-                 rm -rf node_modules .cache .tmp build
-                 npm install --omit=dev --legacy-peer-deps
-                 npm run build
-                 pm2 restart all
+                  export NODE_ENV=production
+                  rm -rf node_modules .cache .tmp build
+                  npm install --omit=dev --legacy-peer-deps --ignore-engines
+                  npm run build
+                  pm2 restart all
