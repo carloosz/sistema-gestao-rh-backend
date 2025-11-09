@@ -19,23 +19,10 @@ jobs:
          - name: Install System Dependencies
            run: |
               sudo apt-get update
-              sudo apt-get install -y \
-                build-essential \
-                libvips-dev \
-                libglib2.0-dev \
-                libcairo2-dev \
-                libpango1.0-dev \
-                libjpeg-dev \
-                libgif-dev \
-                librsvg2-dev \
-                python3 \
-                pkg-config
+              sudo apt-get install -y libvips-dev
 
          - name: Install dependencies
            run: npm install
-
-         - name: Rebuild Sharp
-           run: npm rebuild sharp --build-from-source
 
          - name: Run Build
            run: npm run build
