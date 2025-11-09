@@ -14,18 +14,28 @@ jobs:
          - name: Setup Node.js
            uses: actions/setup-node@v3
            with:
-              node-version: 18.x
+              node-version: "18.x"
+              cache: "npm"
 
          - name: Install System Dependencies
            run: |
               sudo apt-get update
               sudo apt-get install -y libvips-dev
 
-         - name: Install dependencies
-           run: npm install
+         - name: Clean and Install dependencies
+           run: |
+              rm -rf node_modules
+              rm -rf .cache
+              rm -rf build
+              npm ci
+
+         - name: Rebuild native modules
+           run: npm rebuild @swc/core
 
          - name: Run Build
            run: npm run build
+           env:
+              NODE_ENV: production
 
          - name: Run Tests
            run: npm run test:unit --coverage
@@ -37,7 +47,7 @@ jobs:
               username: ${{ secrets.USERNAME }}
               port: 22
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              source: ".,!node_modules"
+              source: ".,!node_modules,!.cache"
               target: ${{ secrets.PROJECT_PATH }}
 
          - name: Restart application
@@ -49,6 +59,9 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
                  cd ${{ secrets.PROJECT_PATH }}
-                 npm install --omit=dev
+                 export NODE_ENV=production
+                 rm -rf node_modules .cache
+                 npm ci --omit=dev
+                 npm rebuild @swc/core
                  npm run build
                  pm2 restart all
