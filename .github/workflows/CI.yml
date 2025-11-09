@@ -27,7 +27,7 @@ jobs:
               rm -rf node_modules
               rm -rf .cache
               rm -rf build
-              npm ci
+              npm install
 
          - name: Rebuild native modules
            run: npm rebuild @swc/core
