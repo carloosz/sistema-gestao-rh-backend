@@ -70,7 +70,7 @@ describe("ForgotPassword - Unit Tests", () => {
          to: "user@test.com",
          subject: "Solicitação de redefinição de senha",
          html: expect.stringContaining(
-            "https://rh/netlify.app/redefinir-senha?code=mocked-token-1234567890",
+            "https://sistema-gestao-rh-colaborador.netlify.app/redefinir-senha?code=mocked-token-1234567890",
          ),
       });
 
