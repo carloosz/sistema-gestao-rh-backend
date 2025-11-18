@@ -53,6 +53,11 @@ describe("ForgotPassword - Unit Tests", () => {
 
       expect(mockFindFirst).toHaveBeenCalledWith({
          filters: { email: "user@test.com" },
+         populate: {
+            client: {
+               fields: 'name'
+            }
+         }
       });
 
       expect(mockUpdate).toHaveBeenCalledWith({
