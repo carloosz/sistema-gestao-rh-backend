@@ -10,10 +10,14 @@ export const editUserSchema = yup.object().shape({
       .optional(),
 
    password: yup
-      .string()
-      .nullable()
-      .min(6, "Senha deve ter no mínimo 6 caracteres")
-      .optional(),
+   .string()
+   .nullable()
+   .transform((value) => {
+      const trimmed = value?.trim();
+      return trimmed || null;
+   })
+   .min(6, "Senha deve ter no mínimo 6 caracteres")
+   .optional(),
 
    cpf: yup
       .string()
