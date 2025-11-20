@@ -14,7 +14,7 @@ export const editUserSchema = yup.object().shape({
    .nullable()
    .transform((value) => {
       const trimmed = value?.trim();
-      return trimmed || null;
+      return trimmed || undefined;
    })
    .min(6, "Senha deve ter no mínimo 6 caracteres")
    .optional(),
