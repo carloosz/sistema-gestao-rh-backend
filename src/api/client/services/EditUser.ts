@@ -81,7 +81,12 @@ class EditUser {
                            }
                         },
                         {
-                           documentId: userDocumentId || 'a'
+                           documentId: userDocumentId || 'a',
+                           role: {
+                              id: {
+                                 $ne: ADMIN_ROLE_ID
+                              }
+                           }
                         }
                      ]
                   },
