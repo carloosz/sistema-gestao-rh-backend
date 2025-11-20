@@ -22,8 +22,10 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y libvips-dev
 
-         - name: Install dependencies (for tests only)
-           run: yarn install
+         - name: Clean and Install Dependencies
+           run: |
+              rm -rf node_modules .cache .tmp
+              yarn install --frozen-lockfile
 
          - name: Run Tests
            run: yarn test:unit --coverage
