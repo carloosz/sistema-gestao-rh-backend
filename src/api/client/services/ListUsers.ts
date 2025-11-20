@@ -74,7 +74,10 @@ class ListUsers {
                      },
                   ],
                   client: {
-                     isActive: (isActive !== "true" && isActive !== "false") ? true : isActive,
+                     isActive:
+                        isActive !== "true" && isActive !== "false"
+                           ? true
+                           : isActive,
                   },
                   role: {
                      id: 1,
