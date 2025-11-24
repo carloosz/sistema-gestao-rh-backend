@@ -22,30 +22,25 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y libvips-dev
 
-         - name: Clean and Install Dependencies
+         - name: Install Dependencies
            run: |
-              rm -rf node_modules .cache .tmp
-              yarn
-
-         - name: Run Build
-           run: yarn build
+              yarn --frozen-lockfile
 
          - name: Run Tests
            run: yarn test:unit --coverage
 
-         - name: Copy to Digital Ocean
+         - name: Copy Source to Digital Ocean
            uses: appleboy/scp-action@v1
            with:
               host: ${{ secrets.HOST }}
               username: ${{ secrets.USERNAME }}
               port: 22
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              source: ".,!node_modules"
+              source: "config,package.json,yarn.lock,.env.example,src,public,plugins"
               target: ${{ secrets.PROJECT_PATH }}
-              # strip_components: 0
-              # rm: false
+              strip_components: 0
 
-         - name: Restart application
+         - name: Deploy and Restart Application
            uses: appleboy/ssh-action@master
            with:
               host: ${{ secrets.HOST }}
@@ -53,15 +48,21 @@ jobs:
               port: 22
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               script: |
+                 set -e
                  cd ${{ secrets.PROJECT_PATH }}
-                 export NODE_ENV=production
-
-                 # Restart do PM2
+                 echo "--- Cleaning up old files ---"
+                 rm -rf node_modules build .cache .tmp
+                 echo "--- Installing dependencies ---"
+                 yarn install --production --frozen-lockfile
+                 echo "--- Building application ---"
+                 NODE_ENV=production yarn build
+                 echo "--- Managing PM2 process ---"
                  if pm2 list | grep -q "sistema-gestao-rh"; then
-                   cd sistema-gestao-rh
-                   yarn
+                   echo "--- Restarting application ---"
                    pm2 restart sistema-gestao-rh
                  else
+                   echo "--- Starting application ---"
                    pm2 start yarn --name "sistema-gestao-rh" -- start
-                   pm2 save
                  fi
+                 pm2 save
+                 echo "--- Deployment complete ---"
