@@ -42,8 +42,8 @@ jobs:
               key: ${{ secrets.SSH_PRIVATE_KEY }}
               source: "*,!node_modules,!.cache,!.tmp,!build,!.git"
               target: ${{ secrets.PROJECT_PATH }}
-              strip_components: 0
-              rm: false
+              # strip_components: 0
+              # rm: false
 
          - name: Restart application
            uses: appleboy/ssh-action@master
