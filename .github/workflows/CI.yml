@@ -40,7 +40,7 @@ jobs:
               username: ${{ secrets.USERNAME }}
               port: 22
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              source: "*,!node_modules"
+              source: ".,!node_modules"
               target: ${{ secrets.PROJECT_PATH }}
               # strip_components: 0
               # rm: false
