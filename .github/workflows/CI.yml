@@ -53,7 +53,7 @@ jobs:
                  echo "--- Cleaning up old files ---"
                  rm -rf node_modules build .cache .tmp
                  echo "--- Installing dependencies ---"
-                 yarn install --production --frozen-lockfile --ignore-engines
+                 yarn install --frozen-lockfile --ignore-engines
                  echo "--- Building application ---"
                  NODE_ENV=production yarn build
                  echo "--- Managing PM2 process ---"
