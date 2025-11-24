@@ -58,6 +58,6 @@ export default factories.createCoreController(
       listMyInformations(ctx) {
          const clientService = new ListUsers();
          return clientService.listMyInformations(ctx);
-      },
+      }
    }),
 );
