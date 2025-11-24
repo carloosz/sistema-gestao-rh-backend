@@ -25,7 +25,7 @@ jobs:
          - name: Clean and Install Dependencies
            run: |
               rm -rf node_modules .cache .tmp
-              yarn install --frozen-lockfile
+              yarn
 
          - name: Run Build
            run: yarn build
