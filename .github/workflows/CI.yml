@@ -58,6 +58,8 @@ jobs:
 
                  # Restart do PM2
                  if pm2 list | grep -q "sistema-gestao-rh"; then
+                   cd sistema-gestao-rh
+                   yarn
                    pm2 restart sistema-gestao-rh
                  else
                    pm2 start yarn --name "sistema-gestao-rh" -- start
