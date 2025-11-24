@@ -56,15 +56,6 @@ jobs:
                  cd ${{ secrets.PROJECT_PATH }}
                  export NODE_ENV=production
 
-                 # Remove cache e temp
-                 rm -rf node_modules .cache .tmp
-
-                 # Instala dependências de produção
-                 yarn install --production --frozen-lockfile
-
-                 # Build da aplicação
-                 yarn build
-
                  # Restart do PM2
                  if pm2 list | grep -q "sistema-gestao-rh"; then
                    pm2 restart sistema-gestao-rh
