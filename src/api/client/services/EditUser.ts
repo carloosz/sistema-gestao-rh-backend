@@ -113,7 +113,7 @@ class EditUser {
                data: {
                   username: data.email ?? user.email,
                   email: data.email ?? user.email,
-                  password: data.password ?? user.password,
+                  password: data.password,
                },
             });
 
