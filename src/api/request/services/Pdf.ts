@@ -43,7 +43,7 @@ class Pdf {
 
          doc.pipe(stream);
 
-         const squareSize = 20;
+         const squareSize = 15;
          const squares = [
             // Linha 1 (topo)
             { x: 0, y: 0, color: '#1a1a1a' },

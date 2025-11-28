@@ -47,7 +47,7 @@ class Pdf {
          doc.pipe(stream);
 
          //definir quadrados pra efeito visual no canto superior esquerdo
-         const squareSize = 20;
+         const squareSize = 15;
          const squares = [
             // Linha 1 (topo)
             { x: 0, y: 0, color: "#1a1a1a" },
