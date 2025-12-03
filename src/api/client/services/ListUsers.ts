@@ -152,6 +152,16 @@ class ListUsers {
             throw new ApplicationError("Colaborador não encontrado");
          }
 
+         let dismissalDateFormatted =
+            new Date(user.client.professional_data.dismissalDate) || null;
+         if (dismissalDateFormatted) {
+            dismissalDateFormatted = new Date(
+               dismissalDateFormatted.setHours(
+                  new Date(dismissalDateFormatted).getHours() - 3,
+               ),
+            );
+         }
+
          //formatar informacoes para retorno
          const formattedUser = {
             id: user.client?.id,
@@ -186,11 +196,7 @@ class ListUsers {
             finalHour: user.client.professional_data?.finalHour,
             lunchInitialHour: user.client.professional_data?.lunchInitialHour,
             lunchFinalHour: user.client.professional_data?.lunchFinalHour,
-            dismissalDate: user.client.professional_data?.dismissalDate
-               ? new Date(
-                    user.client.professional_data.dismissalDate,
-                 ).toISOString()
-               : null,
+            dismissalDate: dismissalDateFormatted,
             dismissalObservation:
                user.client.professional_data?.dismissalObservation,
             typeOfTermination: user.client.professional_data?.typeOfTermination,
