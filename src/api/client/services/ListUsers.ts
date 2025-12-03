@@ -155,11 +155,7 @@ class ListUsers {
          let dismissalDateFormatted =
             new Date(user.client.professional_data.dismissalDate) || null;
          if (dismissalDateFormatted) {
-            dismissalDateFormatted = new Date(
-               dismissalDateFormatted.setHours(
-                  new Date(dismissalDateFormatted).getHours() - 3,
-               ),
-            );
+           dismissalDateFormatted.setHours(new Date().getHours() - 3);
          }
 
          //formatar informacoes para retorno
