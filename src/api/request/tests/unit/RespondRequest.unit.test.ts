@@ -36,7 +36,7 @@ describe("RespondRequest - Unit Tests", () => {
          })),
       };
 
-      process.env.EMAIL_FROM = "'no-reply@empresa.com";
+      process.env.EMAIL_FROM = "no-reply@empresa.com";
 
       jest.clearAllMocks();
    });
