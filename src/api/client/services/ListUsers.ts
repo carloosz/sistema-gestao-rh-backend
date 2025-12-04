@@ -152,8 +152,10 @@ class ListUsers {
             throw new ApplicationError("Colaborador não encontrado");
          }
 
-         let dismissalDateFormatted =
-            new Date(user.client.professional_data.dismissalDate) || null;
+         let dismissalDateFormatted = user.client.professional_data
+            .dismissalDate
+            ? new Date(user.client.professional_data.dismissalDate)
+            : null;
          if (dismissalDateFormatted) {
            dismissalDateFormatted.setHours(new Date().getHours() - 3);
          }
