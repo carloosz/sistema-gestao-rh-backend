@@ -37,7 +37,7 @@ class RespondRequest {
 
             const sendEmail = new SendEmail();
             await sendEmail.sendEmail({
-               from: process.env.EMAIL_FROM,
+               from: `'RH+' <${process.env.EMAIL_FROM}>`,
                to: request.client.user.email,
                subject: `Solicitação ${request.id} respondida`,
                html: `

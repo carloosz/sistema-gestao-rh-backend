@@ -123,7 +123,7 @@ class ForgotPassword {
 
          //enviando o e-mail
          await emailProvider.sendEmail({
-            from: process.env.EMAIL_FROM,
+            from: `'RH+' <${process.env.EMAIL_FROM}>`,
             to: email,
             subject: "Solicitação de redefinição de senha",
             html: message,
