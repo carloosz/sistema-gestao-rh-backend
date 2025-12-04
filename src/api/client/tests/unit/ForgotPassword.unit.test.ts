@@ -66,7 +66,7 @@ describe("ForgotPassword - Unit Tests", () => {
       });
 
       expect(mockSendEmail).toHaveBeenCalledWith({
-         from: "no-reply@empresa.com",
+         from: "'RH+' <no-reply@empresa.com>",
          to: "user@test.com",
          subject: "Solicitação de redefinição de senha",
          html: expect.stringContaining(

@@ -79,7 +79,7 @@ describe("RespondRequest - Unit Tests", () => {
       });
 
       expect(mockSendEmail).toHaveBeenCalledWith({
-         from: "no-reply@sgrh.com",
+         from: "'RH+' <no-reply@empresa.com>",
          to: "user@test.com",
          subject: "Solicitação 123 respondida",
          html: expect.any(String),
