@@ -52,6 +52,14 @@ class DismissUser {
                documentId: user.client?.documentId,
                data: {
                   isActive: false,
+                  zipCode: null,
+                  address: null,
+                  state: null,
+                  city: null,
+                  neighborhood: null,
+                  number: null,
+                  dateOfBirth: null,
+                  gender: null
                },
             });
 
@@ -63,6 +71,15 @@ class DismissUser {
                      dismissalDate: date ? new Date(date) : new Date(),
                      dismissalObservation: observation || null,
                      typeOfTermination: typeOfTermination as any,
+                  },
+               });
+
+            await strapi
+               .documents("plugin::users-permissions.user")
+               .update({
+                  documentId: user.documentId,
+                  data: {
+                     blocked: true,
                   },
                });
 
