@@ -43,6 +43,9 @@ class RegisterUser {
                            },
                         },
                      ],
+                     client: {
+                        isActive: true,
+                     }
                   },
                });
 
