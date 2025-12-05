@@ -79,6 +79,8 @@ class DismissUser {
                .update({
                   documentId: user.documentId,
                   data: {
+                     username: user.username + "-desligado",
+                     email: `usuariodesligado${user.documentId}@email.com`,
                      blocked: true,
                   },
                });
