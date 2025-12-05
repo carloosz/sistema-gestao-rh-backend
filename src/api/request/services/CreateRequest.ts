@@ -36,7 +36,7 @@ class CreateRequest {
                });
 
             if (!client) {
-               throw new ApplicationError("Colaborador não encontrado");
+               throw new ApplicationError("Colaborador não encontrado");
             }
 
             let newFile;

@@ -96,7 +96,7 @@ describe("DismissUser - Unit Tests", () => {
       };
 
       await expect(service.dismissUser(ctx)).rejects.toThrow(
-         "Colaborador não encontrado",
+         "Colaborador não encontrado",
       );
    });
 

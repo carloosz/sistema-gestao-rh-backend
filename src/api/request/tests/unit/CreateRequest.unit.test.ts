@@ -30,8 +30,18 @@ jest.mock("../../validation/CreateRequestSchema", () => ({
    validate: jest.fn(),
 }));
 
+jest.mock("file-type", () => ({
+   fromBuffer: jest.fn(),
+}));
+
+jest.mock("fs", () => ({
+   readFileSync: jest.fn(),
+}));
+
 import { CreateRequest } from "../../services/CreateRequest";
 import createRequestSchema from "../../validation/CreateRequestSchema";
+import * as fileType from "file-type";
+import * as fs from "fs";
 
 describe("CreateRequest - Unit Tests", () => {
    let service: CreateRequest;
@@ -67,6 +77,8 @@ describe("CreateRequest - Unit Tests", () => {
       const mockFile = {
          size: 1024,
          originalFilename: "comprovante.pdf",
+         type: "application/pdf",
+         path: "/tmp/upload.pdf",
       };
       const mockUploadedFile = [
          {
@@ -81,6 +93,12 @@ describe("CreateRequest - Unit Tests", () => {
       (createRequestSchema.validate as jest.Mock).mockResolvedValue({
          type: "Atestado",
          observation: "Doença",
+      });
+      (fs.readFileSync as jest.Mock).mockReturnValue(
+         Buffer.from("pdf content"),
+      );
+      (fileType.fromBuffer as jest.Mock).mockResolvedValue({
+         mime: "application/pdf",
       });
       mockUpload.mockResolvedValue(mockUploadedFile);
       mockCreate.mockResolvedValue({ file: mockUploadedFile[0] });
@@ -107,6 +125,8 @@ describe("CreateRequest - Unit Tests", () => {
          { type: "Atestado", observation: "Doença" },
          { abortEarly: false, stripUnknown: true },
       );
+      expect(fs.readFileSync).toHaveBeenCalledWith("/tmp/upload.pdf");
+      expect(fileType.fromBuffer).toHaveBeenCalled();
       expect(mockUpload).toHaveBeenCalledWith({
          files: mockFile,
          data: {
@@ -207,7 +227,11 @@ describe("CreateRequest - Unit Tests", () => {
    });
 
    it("deve lançar erro se arquivo for maior que 15MB", async () => {
-      const mockFile = { size: 16 * 1024 * 1024, originalFilename: "big.pdf" };
+      const mockFile = {
+         size: 16 * 1024 * 1024,
+         originalFilename: "big.pdf",
+         type: "application/pdf",
+      };
 
       mockFindFirst.mockResolvedValue({ documentId: "client123" });
       (createRequestSchema.validate as jest.Mock).mockResolvedValue({
@@ -233,13 +257,124 @@ describe("CreateRequest - Unit Tests", () => {
       );
    });
 
-   it("deve lançar erro genérico se upload falhar", async () => {
-      const mockFile = { size: 1024, originalFilename: "file.pdf" };
+   it("deve lançar erro se extensão do arquivo não for permitida", async () => {
+      const mockFile = {
+         size: 1024,
+         originalFilename: "malware.exe",
+         type: "application/x-msdownload",
+      };
 
       mockFindFirst.mockResolvedValue({ documentId: "client123" });
       (createRequestSchema.validate as jest.Mock).mockResolvedValue({
          type: "Atestado",
          observation: "Doença",
+      });
+
+      const ctx = {
+         request: {
+            body: {
+               data: JSON.stringify({
+                  type: "Atestado",
+                  observation: "Doença",
+               }),
+            },
+            files: { file: mockFile },
+         },
+         state: { user: { documentId: "user123" } },
+      };
+
+      await expect(service.createRequest(ctx)).rejects.toThrow(
+         "Tipo de arquivo não permitido. Extensões aceitas:",
+      );
+   });
+
+   it("deve lançar erro se MIME type declarado não for permitido", async () => {
+      const mockFile = {
+         size: 1024,
+         originalFilename: "script.pdf",
+         type: "application/javascript",
+      };
+
+      mockFindFirst.mockResolvedValue({ documentId: "client123" });
+      (createRequestSchema.validate as jest.Mock).mockResolvedValue({
+         type: "Atestado",
+         observation: "Doença",
+      });
+
+      const ctx = {
+         request: {
+            body: {
+               data: JSON.stringify({
+                  type: "Atestado",
+                  observation: "Doença",
+               }),
+            },
+            files: { file: mockFile },
+         },
+         state: { user: { documentId: "user123" } },
+      };
+
+      await expect(service.createRequest(ctx)).rejects.toThrow(
+         "Tipo de arquivo não permitido. Envie apenas documentos e imagens.",
+      );
+   });
+
+   it("deve lançar erro se MIME type real não corresponder ao declarado", async () => {
+      const mockFile = {
+         size: 1024,
+         originalFilename: "fake.pdf",
+         type: "application/pdf",
+         path: "/tmp/fake.pdf",
+      };
+
+      mockFindFirst.mockResolvedValue({ documentId: "client123" });
+      (createRequestSchema.validate as jest.Mock).mockResolvedValue({
+         type: "Atestado",
+         observation: "Doença",
+      });
+      (fs.readFileSync as jest.Mock).mockReturnValue(
+         Buffer.from("exe content"),
+      );
+      (fileType.fromBuffer as jest.Mock).mockResolvedValue({
+         mime: "application/x-msdownload", // Retorna que é um executável
+      });
+
+      const ctx = {
+         request: {
+            body: {
+               data: JSON.stringify({
+                  type: "Atestado",
+                  observation: "Doença",
+               }),
+            },
+            files: { file: mockFile },
+         },
+         state: { user: { documentId: "user123" } },
+      };
+
+      await expect(service.createRequest(ctx)).rejects.toThrow(
+         "O arquivo enviado não corresponde ao tipo declarado",
+      );
+   });
+
+   it("deve lançar erro genérico se upload falhar", async () => {
+      const mockFile = {
+         size: 1024,
+         originalFilename: "file.pdf",
+         type: "application/pdf",
+         path: "/tmp/file.pdf",
+      };
+
+      mockFindFirst.mockResolvedValue({ documentId: "client123" });
+      (createRequestSchema.validate as jest.Mock).mockResolvedValue({
+         type: "Atestado",
+         observation: "Doença",
+      });
+      (fs.readFileSync as jest.Mock).mockReturnValue(
+         Buffer.from("pdf content"),
+      );
+      (fileType.fromBuffer as jest.Mock).mockResolvedValue({
+         mime: "application/pdf",
       });
       mockUpload.mockRejectedValue(new Error("Upload failed"));
 
