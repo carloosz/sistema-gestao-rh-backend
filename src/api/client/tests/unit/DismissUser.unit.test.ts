@@ -24,6 +24,8 @@ describe("DismissUser - Unit Tests", () => {
    it("deve demitir colaborador com sucesso", async () => {
       mockFindFirst.mockResolvedValue({
          documentId: "user123",
+         email: "user123@email.com",
+         username: "user123",
          client: {
             documentId: "client123",
             isActive: true,
@@ -50,17 +52,36 @@ describe("DismissUser - Unit Tests", () => {
          }),
       );
 
-      expect(mockUpdate).toHaveBeenCalledWith({
+      expect(mockUpdate).toHaveBeenNthCalledWith(1, {
          documentId: "client123",
-         data: { isActive: false },
+         data: {
+            isActive: false,
+            zipCode: null,
+            address: null,
+            state: null,
+            city: null,
+            neighborhood: null,
+            number: null,
+            dateOfBirth: null,
+            gender: null,
+         },
       });
 
-      expect(mockUpdate).toHaveBeenCalledWith({
+      expect(mockUpdate).toHaveBeenNthCalledWith(2, {
          documentId: "pd123",
          data: {
             dismissalDate: new Date("2025-06-01"),
             dismissalObservation: "Demissão por justa causa",
             typeOfTermination: "Justa Causa",
+         },
+      });
+
+      expect(mockUpdate).toHaveBeenNthCalledWith(3, {
+         documentId: "user123",
+         data: {
+            blocked: true,
+            email: "usuariodesligadouser123@email.com",
+            username: "user123-desligado",
          },
       });
 
@@ -75,13 +96,17 @@ describe("DismissUser - Unit Tests", () => {
       };
 
       await expect(service.dismissUser(ctx)).rejects.toThrow(
-         "Colaborador não encontrado",
+         "Colaborador não encontrado",
       );
    });
 
    it("deve lançar erro se colaborador já estiver desligado", async () => {
       mockFindFirst.mockResolvedValue({
-         client: { isActive: false },
+         documentId: "user123",
+         client: {
+            documentId: "client123",
+            isActive: false,
+         },
       });
 
       const ctx = {
@@ -89,12 +114,13 @@ describe("DismissUser - Unit Tests", () => {
       };
 
       await expect(service.dismissUser(ctx)).rejects.toThrow(
-         "Colaborador já desligado",
+         "Colaborador já desligado",
       );
    });
 
    it("deve lançar erro genérico se update falhar", async () => {
       mockFindFirst.mockResolvedValue({
+         documentId: "user123",
          client: {
             documentId: "client123",
             isActive: true,
@@ -115,9 +141,12 @@ describe("DismissUser - Unit Tests", () => {
 
    it("deve usar data atual se não for informada", async () => {
       const now = new Date();
-      jest.spyOn(global, "Date").mockImplementation(() => now);
+      jest.spyOn(global, "Date").mockImplementation((() => now) as any);
 
       mockFindFirst.mockResolvedValue({
+         documentId: "user123",
+         email: "user123@email.com",
+         username: "user123",
          client: {
             documentId: "client123",
             isActive: true,
@@ -131,7 +160,8 @@ describe("DismissUser - Unit Tests", () => {
 
       await service.dismissUser(ctx);
 
-      expect(mockUpdate).toHaveBeenCalledWith(
+      expect(mockUpdate).toHaveBeenNthCalledWith(
+         2,
          expect.objectContaining({
             data: expect.objectContaining({
                dismissalDate: now,
