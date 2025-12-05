@@ -44,7 +44,7 @@ class DismissUser {
             }
 
             if (!user.client.isActive) {
-               throw new ApplicationError("Colaborador já desligado");
+               throw new ApplicationError("Colaborador já desligado");
             }
 
             //desligar colaborador

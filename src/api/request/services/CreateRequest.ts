@@ -117,7 +117,7 @@ class CreateRequest {
                      folder: "API Uploads",
                      fileInfo: {
                         name: file.originalFilename || "default_name",
-                        alternativeText: "Anexo da solicitação",
+                        alternativeText: "Anexo da solicitação",
                      },
                   },
                });
@@ -147,7 +147,7 @@ class CreateRequest {
             throw new ApplicationError(
                err instanceof ApplicationError
                   ? err.message
-                  : "Ocorreu um erro ao criar a solicitação",
+                  : "Ocorreu um erro ao criar a solicitação",
             );
          }
       });
